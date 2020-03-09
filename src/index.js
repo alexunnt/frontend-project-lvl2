@@ -1,12 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 import _ from 'lodash';
+import parsing from './parsers.js';
 
 const genDiff = (pathToFirstFile, pathToSecondFile) => {
   const contentOfFirstFile = fs.readFileSync(path.resolve(process.cwd(), pathToFirstFile), 'utf-8');
   const contentOfSecondFile = fs.readFileSync(path.resolve(process.cwd(), pathToSecondFile), 'utf-8');
-  const firstObjectData = JSON.parse(contentOfFirstFile);
-  const secondObjectData = JSON.parse(contentOfSecondFile);
+  const extensionOfFirstFile = path.extname(pathToFirstFile);
+  const extensionOfSecondFile = path.extname(pathToSecondFile);
+  const firstObjectData = parsing(contentOfFirstFile, extensionOfFirstFile);
+  const secondObjectData = parsing(contentOfSecondFile, extensionOfSecondFile);
 
   const uniqueKeys = _.union(Object.keys(firstObjectData), Object.keys(secondObjectData));
   const buildDifference = uniqueKeys.reduce((acc, item) => {
