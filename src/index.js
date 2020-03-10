@@ -1,74 +1,22 @@
 import fs from 'fs';
 import path from 'path';
-import _ from 'lodash';
 import parsing from './parsers.js';
+import getOutput from './rendering.js';
+import buildDifference from './buildDiff.js';
 
 const genDiff = (pathToFirstFile, pathToSecondFile) => {
   const contentOfFirstFile = fs.readFileSync(path.resolve(process.cwd(), pathToFirstFile), 'utf-8');
   const contentOfSecondFile = fs.readFileSync(path.resolve(process.cwd(), pathToSecondFile), 'utf-8');
-  const extensionOfFirstFile = path.extname(pathToFirstFile);
-  const extensionOfSecondFile = path.extname(pathToSecondFile);
-  const firstObjectData = parsing(contentOfFirstFile, extensionOfFirstFile);
-  const secondObjectData = parsing(contentOfSecondFile, extensionOfSecondFile);
 
-  const uniqueKeys = _.union(Object.keys(firstObjectData), Object.keys(secondObjectData));
-  const buildDifference = uniqueKeys.reduce((acc, item) => {
-    if ((_.has(firstObjectData, item) && _.has(secondObjectData, item))) {
-      return acc.concat({
-        type: 'equal',
-        key: item,
-        firstValue: firstObjectData[item],
-        secondValue: secondObjectData[item],
-      });
-    }
-    if ((_.has(firstObjectData, item) && _.has(secondObjectData, item)) && firstObjectData[item]) {
-      return acc.concat({
-        type: 'changed',
-        key: item,
-        firstValue: firstObjectData[item],
-        secondValue: secondObjectData[item],
-      });
-    }
-    if (_.has(firstObjectData, item) && !_.has(secondObjectData, item)) {
-      return acc.concat({
-        type: 'deleted',
-        key: item,
-        firstValue: firstObjectData[item],
-        secondValue: null,
-      });
-    }
-    if (!_.has(firstObjectData, item) && _.has(secondObjectData, item)) {
-      return acc.concat({
-        type: 'added',
-        key: item,
-        firstValue: null,
-        secondValue: secondObjectData[item],
-      });
-    }
-    return acc;
-  }, []);
+  const extensionOfFirstFile = path.extname(pathToFirstFile).slice(1);
+  const extensionOfSecondFile = path.extname(pathToSecondFile).slice(1);
 
-  const result = buildDifference.reduce((acc, item) => {
-    if (item.type === 'equal') {
-      acc.push(`${item.key}: ${item.firstValue}`);
-      return acc;
-    }
-    if (item.type === 'changed') {
-      acc.push(`- ${item.key}: ${item.firstValue}`);
-      acc.push(`+ ${item.key}: ${item.secondValue}`);
-      return acc;
-    }
-    if (item.type === 'deleted') {
-      acc.push(`- ${item.key}: ${item.firstValue}`);
-      return acc;
-    }
-    if (item.type === 'added') {
-      acc.push(`+ ${item.key}: ${item.secondValue}`);
-    }
-    return acc;
-  }, []);
+  const firstObjectData = parsing(extensionOfFirstFile, contentOfFirstFile);
+  const secondObjectData = parsing(extensionOfSecondFile, contentOfSecondFile);
 
-  return result;
+  const difference = buildDifference(firstObjectData, secondObjectData);
+
+  return getOutput(difference);
 };
 
 export default genDiff;
