@@ -31,6 +31,13 @@ $ gendiff FILENAME.ini FILENAME.ini
 ```
 [![asciicast](https://asciinema.org/a/309075.svg)](https://asciinema.org/a/309075)
 
+```
+$ gendiff --format [type] FILENAME.[extension] FILENAME.[extension]
+```
+**Note:** ```[type]: complex, plain``` or ```json```; ```[extension]: json, yml``` or ```ini```.
+
+[![asciicast](https://asciinema.org/a/309459.svg)](https://asciinema.org/a/309459)
+
 ## Help
 
 ```
