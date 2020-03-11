@@ -1,6 +1,6 @@
 <div align="center">
   <h1>gendiff</h1>
-  <p>console utility to compare two configuration files and show a difference</p>
+  <p>console utility for comparing two configuration files and showing their differences</p>
 </div>
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/9567aa49ed7a59f9d9f1/maintainability)](https://codeclimate.com/github/alexunnt/frontend-project-lvl2/maintainability)
@@ -14,7 +14,7 @@ $ make install
 $ make publish
 $ npm link
 ```
-**Note:** To start using this utility first clone this package.
+**Note:** To start using the utility first clone the package.
 
 ## Usage
 
