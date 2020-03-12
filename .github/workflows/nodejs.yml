@@ -19,9 +19,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: npm install
+      - name: npm install, build
         run: |
           make install
+          make build
         env:
           CI: true
       - name: Run linter
@@ -30,7 +31,7 @@ jobs:
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v2.4.0
         env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+          CC_TEST_REPORTER_ID: 9d26a36ff60af728c74d117c6efb5f370c43a1aef170dc428260d2b6bc3a2e7f
         with:
           coverageCommand: make test-coverage
           debug: true
