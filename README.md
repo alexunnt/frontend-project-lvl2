@@ -38,6 +38,8 @@ $ gendiff --format [type] FILENAME.[extension] FILENAME.[extension]
 
 [![asciicast](https://asciinema.org/a/309459.svg)](https://asciinema.org/a/309459)
 
+[![asciicast](https://asciinema.org/a/309673.svg)](https://asciinema.org/a/309673)
+
 ## Help
 
 ```
