@@ -1,30 +1,32 @@
 import fs from 'fs';
 import genDiff from '../src';
 
+const pathToFixtures = '__tests__/__fixtures__/';
+
 describe('Comparing two configuration files and showing a difference.', () => {
   it('json', () => {
-    const firstFile = '__tests__/__fixtures__/before.json';
-    const secondFile = '__tests__/__fixtures__/after.json';
+    const firstFile = `${pathToFixtures}before.json`;
+    const secondFile = `${pathToFixtures}after.json`;
     const expected = fs.readFileSync(`${__dirname}/__fixtures__/result.txt`, 'utf-8').trim();
     expect(genDiff(firstFile, secondFile)).toEqual(expected);
   });
   it('yaml', () => {
-    const firstFile = '__tests__/__fixtures__/before.yml';
-    const secondFile = '__tests__/__fixtures__/after.yml';
+    const firstFile = `${pathToFixtures}before.yml`;
+    const secondFile = `${pathToFixtures}after.yml`;
     const expected = fs.readFileSync(`${__dirname}/__fixtures__/result.txt`, 'utf-8').trim();
     expect(genDiff(firstFile, secondFile)).toEqual(expected);
   });
 
   it('ini', () => {
-    const firstFile = '__tests__/__fixtures__/before.ini';
-    const secondFile = '__tests__/__fixtures__/after.ini';
+    const firstFile = `${pathToFixtures}before.ini`;
+    const secondFile = `${pathToFixtures}after.ini`;
     const expected = fs.readFileSync(`${__dirname}/__fixtures__/result.txt`, 'utf-8').trim();
     expect(genDiff(firstFile, secondFile)).toEqual(expected);
   });
 
   it('tree', () => {
-    const firstFile = '__tests__/__fixtures__/beforeTree.json';
-    const secondFile = '__tests__/__fixtures__/afterTree.json';
+    const firstFile = `${pathToFixtures}beforeTree.json`;
+    const secondFile = `${pathToFixtures}afterTree.json`;
     const expected = fs.readFileSync(`${__dirname}/__fixtures__/resultTree.txt`, 'utf-8').trim();
     expect(genDiff(firstFile, secondFile)).toEqual(expected);
   });
