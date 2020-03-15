@@ -30,4 +30,11 @@ describe('Comparing two configuration files and showing a difference.', () => {
     const expected = fs.readFileSync(`${__dirname}/__fixtures__/resultTree.txt`, 'utf-8').trim();
     expect(genDiff(firstFile, secondFile)).toEqual(expected);
   });
+
+  it('plain output', () => {
+    const firstFile = `${pathToFixtures}before.json`;
+    const secondFile = `${pathToFixtures}after.json`;
+    const expected = fs.readFileSync(`${__dirname}/__fixtures__/resultPlain.txt`, 'utf-8').trim();
+    expect(genDiff(firstFile, secondFile, 'plain')).toEqual(expected);
+  });
 });
