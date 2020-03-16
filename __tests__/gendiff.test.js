@@ -10,6 +10,7 @@ describe('Comparing two configuration files and showing a difference.', () => {
     const expected = fs.readFileSync(`${__dirname}/__fixtures__/result.txt`, 'utf-8').trim();
     expect(genDiff(firstFile, secondFile)).toEqual(expected);
   });
+
   it('yaml', () => {
     const firstFile = `${pathToFixtures}before.yml`;
     const secondFile = `${pathToFixtures}after.yml`;
