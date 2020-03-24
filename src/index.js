@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import parsing from './parsers.js';
+import parse from './parsers.js';
 import getOutput from './formatters';
 import buildDifference from './buildDiff.js';
 
@@ -11,8 +11,8 @@ const genDiff = (pathToFirstFile, pathToSecondFile, type = 'complex') => {
   const extensionOfFirstFile = path.extname(pathToFirstFile).slice(1);
   const extensionOfSecondFile = path.extname(pathToSecondFile).slice(1);
 
-  const firstObjectData = parsing(extensionOfFirstFile, contentOfFirstFile);
-  const secondObjectData = parsing(extensionOfSecondFile, contentOfSecondFile);
+  const firstObjectData = parse(extensionOfFirstFile, contentOfFirstFile);
+  const secondObjectData = parse(extensionOfSecondFile, contentOfSecondFile);
 
   const difference = buildDifference(firstObjectData, secondObjectData);
 
