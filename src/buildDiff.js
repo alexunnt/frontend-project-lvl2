@@ -6,43 +6,35 @@ const buildDifference = (firstObjectData, secondObjectData) => {
   return uniqueKeys.map((item) => {
     const firstObjectItem = firstObjectData[item];
     const secondObjectItem = secondObjectData[item];
-    if (_.has(firstObjectData, item) && _.has(secondObjectData, item)) {
-      const checkingFirstObject = _.isObject(firstObjectItem);
-      const checkingSecondObject = _.isObject(secondObjectItem);
-      if (checkingFirstObject && checkingSecondObject) {
-        return {
-          type: 'object',
-          key: item,
-          children: buildDifference(firstObjectItem, secondObjectItem),
-        };
-      }
-      if (firstObjectItem === secondObjectItem) {
-        return {
-          type: 'unchanged',
-          key: item,
-          value: firstObjectItem,
-        };
-      }
-      if (checkingFirstObject || checkingSecondObject) {
-        return {
-          type: 'changed',
-          key: item,
-          firstValue: firstObjectItem,
-          secondValue: secondObjectItem,
-        };
-      }
-      return {
-        type: 'changed',
-        key: item,
-        firstValue: firstObjectItem,
-        secondValue: secondObjectItem,
-      };
-    }
     if (_.has(firstObjectData, item)) {
       return {
         type: 'deleted',
         key: item,
         value: firstObjectItem,
+      };
+    }
+    const checkingFirstObject = _.isObject(firstObjectItem);
+    const checkingSecondObject = _.isObject(secondObjectItem);
+    if (checkingFirstObject && checkingSecondObject) {
+      return {
+        type: 'object',
+        key: item,
+        children: buildDifference(firstObjectItem, secondObjectItem),
+      };
+    }
+    if (firstObjectItem === secondObjectItem) {
+      return {
+        type: 'unchanged',
+        key: item,
+        value: firstObjectItem,
+      };
+    }
+    if (checkingFirstObject || checkingSecondObject) {
+      return {
+        type: 'changed',
+        key: item,
+        firstValue: firstObjectItem,
+        secondValue: secondObjectItem,
       };
     }
     return {
